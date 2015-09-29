@@ -9,7 +9,11 @@
 <%@ page import="com.kor.prpt.dao.DbActionProperty" %>
 <%@ page import="com.kor.prpt.dao.DbActionPropertyAgent" %>
 <%@ page import="com.kor.prpt.domain.PropertyAgent" %>
+<%@ page import="javax.servlet.http.Part" %>
+
 <%@ taglib prefix="tags1" tagdir="/WEB-INF/tags" %>    
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <!DOCTYPE html>
 
 
@@ -31,16 +35,26 @@ table, th, td {
 <jsp:useBean id="propertyAgent2" class="com.kor.prpt.domain.PropertyAgent" scope="session"></jsp:useBean>
 <jsp:setProperty property="*" name="property1"/>
 
+<%
+	String errorMsg = (String) request.getAttribute("errorMsg");	
+	if(errorMsg != null && errorMsg.isEmpty() == false){
+%>
+	<p/> ${requestScope.errorMsg}
+
+<%}%>
+
+
 <p/>property form
 <p/> agent name	<%=propertyAgent2.getUsername() %>
 	
-<%
+<%-- <%
 	String action = request.getParameter("propertAction");	
 	
 	if(action != null && action.equals("submitted")){
+		Part part = request.getPart("image");
 		PrintWriter outP = response.getWriter();
  		PropertyVldt vldt =  new PropertyVldt(property1, propertyAgent2);
-		DbActionProperty dbAct = new DbActionProperty(property1, propertyAgent2);
+		DbActionProperty dbAct = new DbActionProperty(property1, propertyAgent2, part);
 		
 		if( vldt.validateProperty() == false ){
 			outP.println(vldt.getVldtErr());
@@ -53,10 +67,13 @@ table, th, td {
 		}
 	}
 %>
-
-<form action="PropertyForm.jsp" method="get">
+ --%>
+  
+ 
+<!-- <form action="PropertyForm.jsp" method="post" enctype="multipart/form-data">
+ -->
+<form action="PrptCtlServlet" method="post" enctype="multipart/form-data">
 <table>
-
 	<tr style="">
 		<td>
 		<input type="hidden" name="propertAction" value="submitted">

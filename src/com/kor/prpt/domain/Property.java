@@ -1,5 +1,7 @@
 package com.kor.prpt.domain;
 
+import javax.servlet.http.Part;
+
 public class Property {
 
 	private String name;
@@ -8,9 +10,18 @@ public class Property {
 	private String image;
 	private String comment;
 	private PropertyAgent pAgt;
+	private Part imgFile;
 	
 	public Property() {
 		// TODO Auto-generated constructor stub
+	}
+	
+	public Part getImgFile() {
+		return imgFile;
+	}
+
+	public void setImgFile(Part imgFile) {
+		this.imgFile = imgFile;
 	}
 
 	public String getName() {

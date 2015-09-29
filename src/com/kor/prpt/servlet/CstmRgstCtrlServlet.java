@@ -1,6 +1,8 @@
 package com.kor.prpt.servlet;
 
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.lang.reflect.InvocationTargetException;
 
 import javax.servlet.ServletException;
@@ -16,7 +18,6 @@ import com.kor.prpt.dao.DbActionCustomer;
 import com.kor.prpt.domain.Customer;
 import com.kor.prpt.vldt.CustomerVldt;
 import com.kor.prpt.vldt.UserVldt;
-
 /**
  * Servlet implementation class CstmRgstCtrlServlet
  */
