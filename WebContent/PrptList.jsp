@@ -19,6 +19,7 @@
 <%@ page  import="java.io.ByteArrayInputStream"%>
 
 <%@ page  import="java.io.InputStream"%>
+<%@ page  import="java.io.PrintWriter"%>
 <%@ page  import="java.util.Iterator"%>
 
 <%@ page  import="javax.imageio.ImageIO"%>
@@ -91,8 +92,7 @@ table, th, td {
 					dbObj.dbInit();
 					conn = dbObj.dbConnect();
 					conn.setAutoCommit(false);
-					PGConnection pgCon =
-			        		(PGConnection)((DelegatingConnection)conn).getInnermostDelegate();
+					PGConnection pgCon = (PGConnection)((DelegatingConnection)conn).getInnermostDelegate();
 			        LargeObjectManager lobj = pgCon.getLargeObjectAPI();
 	
 		        	obj = lobj.open(rs.getLong(7), LargeObjectManager.READ);
@@ -108,11 +108,19 @@ table, th, td {
 				    	reader = readers.next();
 						formatName = reader.getFormatName();
 						imgName.append(formatName);
+//write to local img file
 						OutputStream outputStream = new FileOutputStream(imgName.toString());
 						outputStream.write(buf, 0, buf.length);
 						outputStream.close();
 						Path p1 = Paths.get(imgName.toString());
 						System.out.println(p1.toAbsolutePath());
+//write to local img file
+						
+						PrintWriter outP = response.getWriter();
+						String picUrl = "<img src=\"PicDispServlet?imgID=" + String.valueOf(rs.getLong(7)) + "\">";%>
+						<%=picUrl %>
+						<%
+						//outP.println(picUrl);
 						
 /* 						response.reset();
 						response.setContentType("image/" + formatName);
